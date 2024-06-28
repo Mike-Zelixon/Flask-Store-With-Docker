@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fake Store</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: olive;
+            color: white;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        input {
+            display: block;
+            width: 100%;
+            margin-bottom: 10px;
+            padding: 8px;
+            box-sizing: border-box;
+        }
+        .product-box {
+            display: inline-block;
+            width: 30%;
+            margin: 1%;
+            padding: 10px;
+            box-sizing: border-box;
+            background-color: white;
+            color: black;
+            text-align: center;
+        }
+        .product-box img {
+            width: 100%;
+            height: auto;
+        }
+        .product-box button {
+            padding: 10px 20px;
+            margin-top: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        .product-box button:hover {
+            background-color: #45a049;
+        }
+        #purchases {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Fake Store</h1>
+        <form id="purchaseForm">
+            <div class="form-group">
+                <input type="text" id="first_name" placeholder="First Name" required>
+                <input type="text" id="last_name" placeholder="Last Name" required>
+                <input type="email" id="email" placeholder="Email" required>
+                <input type="text" id="credit_card" placeholder="Credit Card Number" required>
+            </div>
+            <div class="form-group">
+                <div class="product-box">
+                    <img src="{{ url_for('send_image', filename='nikes.jpg') }}" alt="Nikes">
+                    <button type="button" data-item-id="1" data-item-name="Nikes" data-item-price="500">Nikes - $500</button>
+                </div>
+                <div class="product-box">
+                    <img src="{{ url_for('send_image', filename='adidas.jpg') }}" alt="Adidas">
+                    <button type="button" data-item-id="2" data-item-name="Adidas" data-item-price="600">Adidas - $600</button>
+                </div>
+                <div class="product-box">
+                    <img src="{{ url_for('send_image', filename='raffff.jpg') }}" alt="Raf Simmons">
+                    <button type="button" data-item-id="3" data-item-name="Raf Simmons" data-item-price="1000">Raf Simmons - $1000</button>
+                </div>
+            </div>
+        </form>
+        <div id="purchases">
+            <h2>Purchases</h2>
+            <ul id="purchaseList"></ul>
+        </div>
+    </div>
+    <script>
+        document.querySelectorAll('.product-box button').forEach(button => {
+            button.addEventListener('click', function() {
+                const firstName = document.getElementById('first_name').value;
+                const lastName = document.getElementById('last_name').value;
+                const email = document.getElementById('email').value;
+                const creditCard = document.getElementById('credit_card').value;
+                const itemId = this.getAttribute('data-item-id');
+                const itemName = this.getAttribute('data-item-name');
+                const itemPrice = this.getAttribute('data-item-price');
+
+                if (!firstName || !lastName || !email || !creditCard) {
+                    alert('Please fill out all personal information fields.');
+                    return;
+                }
+
+                fetch('http://127.0.0.1:6969/buy', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        first_name: firstName,
+                        last_name: lastName,
+                        email: email,
+                        credit_card: creditCard,
+                        item_id: itemId
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    alert(`Purchase successful! Purchase ID: ${data.purchase_id}`);
+                    loadPurchases();
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+            });
+        });
+
+        function loadPurchases() {
+            fetch('http://127.0.0.1:6969/purchases')
+            .then(response => response.json())
+            .then(data => {
+                const purchaseList = document.getElementById('purchaseList');
+                purchaseList.innerHTML = '';
+                data.forEach(purchase => {
+                    const li = document.createElement('li');
+                    li.textContent = `${purchase[1]} ${purchase[2]} bought ${purchase[6]} for $${purchase[7]}`;
+                    purchaseList.appendChild(li);
+                });
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+
+        loadPurchases();
+    </script>
+</body>
+</html>
