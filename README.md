@@ -1,4 +1,4 @@
-# Dockerstore
+# Flask Shoe Store
 
 Flask App with a Docker Build that creates a store for purchasing shoes.
 
