@@ -11,8 +11,10 @@ UI
 ![alt text](https://github.com/Mike-Zelixon/dockerstore/blob/main/flask%20ui%20webpage.png?raw=true)
 
 DB
+
 ![alt text](https://raw.githubusercontent.com/Mike-Zelixon/dockerstore/main/flask%20store%20db.png)
 
 Swagger UI Page
+
 ![alt text](https://raw.githubusercontent.com/Mike-Zelixon/dockerstore/main/flask%20swagger%20api.png))
 
