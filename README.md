@@ -18,3 +18,7 @@ Swagger UI Page
 
 ![alt text](https://raw.githubusercontent.com/Mike-Zelixon/dockerstore/main/flask%20swagger%20api.png)
 
+Make API call in Python and turn it into a Pandas DF
+
+![alt text](https://github.com/Mike-Zelixon/dockerstore/blob/main/making%20api%20call%20flask.png)
+
