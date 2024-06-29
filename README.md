@@ -16,5 +16,5 @@ DB
 
 Swagger UI Page
 
-![alt text](https://raw.githubusercontent.com/Mike-Zelixon/dockerstore/main/flask%20swagger%20api.png))
+![alt text](https://raw.githubusercontent.com/Mike-Zelixon/dockerstore/main/flask%20swagger%20api.png)
 
